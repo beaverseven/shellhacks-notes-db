@@ -1,5 +1,5 @@
 import Notes from "./config.js";
-import { onSnapshot, query, where } from "firebase/firestore";
+import { onSnapshot, query, where, addDoc, collection } from "firebase/firestore";
 
 //implement query match
 export async function handleGet(req, res) {
@@ -29,3 +29,24 @@ export async function handleGet(req, res) {
 }
 
 //implement post to db
+
+export async function AddReq(req, res) {
+
+
+  const notesData = req.body;
+  const updatedDoc = { ...notesData, created_at: new Date(), likes: 0, dislikes: 0 } //Updates Document into a new object
+  addDoc(Notes,updatedDoc)
+  res.status(200);
+  res.json(updatedDoc);
+
+
+
+
+
+
+
+
+
+}
+
+

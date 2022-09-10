@@ -1,4 +1,4 @@
-import { handleGet } from "./services.js";
+import { AddReq, handleGet } from "./services.js";
 
 /*
 TODO:
@@ -10,5 +10,5 @@ create from body (taking a json request and post to db)
 
 export default async function routes(app) {
   app.get("/get", handleGet);
-  app.post("/create", (req, res) => {});
+  app.post("/create", AddReq);
 }
