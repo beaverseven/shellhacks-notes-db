@@ -1,27 +1,14 @@
-import Notes from "./config.js";
-import { onSnapshot, query, where } from "firebase/firestore";
+import { handleGet } from "./services.js";
 
-async function handleGet(req, res) {
-  const field = "school";
-  const comparator = "==";
-  const target = "CUNY Hunter College";
+/*
+TODO:
+get all with query
+create from body (taking a json request and post to db)
 
-  const matchQuery = query(Notes, where(field, comparator, target));
 
-  //const q = query(Notes); <-- select all
-
-  //fetch from database using query
-  onSnapshot(matchQuery, (snapshot) => {
-    const matchedResult = snapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-
-    res.status(200);
-    res.json({ rows: matchedResult });
-  });
-}
+*/
 
 export default async function routes(app) {
   app.get("/get", handleGet);
+  app.post("/create", (req, res) => {});
 }
