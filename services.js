@@ -45,9 +45,10 @@ async function addPDFToGoogleCloud(documentId) {}
 
 export async function addNotes(req, res) {
   const notesData = req.body;
+
   const updatedDoc = {
     ...notesData,
-    id: "unique thing",
+    id: new Math.floor(Math.random()*1E16),
     created_at: new Date(),
     likes: 0,
     dislikes: 0,
