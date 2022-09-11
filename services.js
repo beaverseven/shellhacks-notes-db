@@ -8,8 +8,7 @@ import {
 import Notes from "./config.js";
 import { textContains } from "./utils.js";
 
-//implement query match
-export async function handleGet(req, res) {
+export async function getNotes(req, res) {
   const queryParams = req.query; //the user queries
 
   function translateQuery(value, key) {
@@ -41,18 +40,28 @@ export async function handleGet(req, res) {
   });
 }
 
-//implement post to db
+//todo
+async function addPDFToGoogleCloud(documentId) {}
 
-export async function AddReq(req, res) {
+export async function addNotes(req, res) {
   const notesData = req.body;
   const updatedDoc = {
     ...notesData,
+    id: "unique thing",
     created_at: new Date(),
     likes: 0,
     dislikes: 0,
   }; //Updates Document into a new object
-  addDoc(Notes, updatedDoc);
+
+  await addDoc(Notes, updatedDoc)
+    .then(async (document) => {
+      console.log(`added ${document.id}`);
+      await addPDFToGoogleCloud(document.id);
+    })
+    .catch((e) => {
+      console.log("could not add notes");
+    });
 
   res.status(200);
-  res.json(updatedDoc);
+  res.json(notesData);
 }
