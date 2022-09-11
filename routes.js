@@ -1,14 +1,6 @@
-import { AddReq, handleGet } from "./services.js";
-
-/*
-TODO:
-get all with query
-create from body (taking a json request and post to db)
-
-
-*/
+import { addNotes, getNotes } from "./services.js";
 
 export default async function routes(app) {
-  app.get("/get", handleGet);
-  app.post("/create", AddReq);
+  app.get("/get", getNotes);
+  app.post("/create", addNotes);
 }
