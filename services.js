@@ -1,10 +1,5 @@
 import _ from "lodash";
-import {
-  onSnapshot,
-  query,
-  where,
-  addDoc,
-} from "firebase/firestore";
+import { onSnapshot, query, where, addDoc } from "firebase/firestore";
 import Notes from "./config.js";
 import { textContains } from "./utils.js";
 
@@ -48,7 +43,7 @@ export async function addNotes(req, res) {
 
   const updatedDoc = {
     ...notesData,
-    id: new Math.floor(Math.random()*1E16),
+    _id: Math.floor(Math.random() * 1e16),
     created_at: new Date(),
     likes: 0,
     dislikes: 0,
@@ -56,8 +51,10 @@ export async function addNotes(req, res) {
 
   await addDoc(Notes, updatedDoc)
     .then(async (document) => {
-      console.log(`added ${document.id}`);
-      await addPDFToGoogleCloud(document.id);
+      console.log(`added ${updatedDoc._id}`);
+      await addPDFToGoogleCloud(pdf, document._id).catch((e) => {
+        console.log("cant add file");
+      });
     })
     .catch((e) => {
       console.log("could not add notes");
